@@ -1,0 +1,59 @@
+name: acm_test
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.5 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_screenutil: ^5.5.3+2
+  cached_network_image: ^3.0.0
+  iconsax: ^0.0.8
+  flutter_animate: any
+  shimmer: ^3.0.0
+  overlay_support: ^2.1.0
+  flutter_bloc: ^8.1.1
+  flutter_hooks: any
+  freezed_annotation: any
+  json_annotation: any
+
+
+dev_dependencies:
+  bloc_test: any
+  build_runner: any
+  flutter_lints: ^3.0.1
+  flutter_test:
+    sdk: flutter
+  freezed: any
+  json_serializable: any
+  flutter_native_splash: ^2.2.17
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/jpegs/
+    - assets/images/svgs/
+  
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Inter/Inter-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
+          weight: 700
+
