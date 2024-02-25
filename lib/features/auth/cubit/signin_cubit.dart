@@ -7,7 +7,12 @@ part 'signin_state.dart';
 part 'signin_cubit.freezed.dart';
 
 class SigninCubit extends Cubit<SigninState> {
-  SigninCubit() : super(const SigninState.initial());
+  SigninCubit({
+     UserRepository? userRepository,
+  }) :  _userRepository = userRepository ?? UserRepository(),
+        super(const SigninState.initial());
+
+  final UserRepository _userRepository;
 
   ///Function to login user
   Future<void> signInUser({

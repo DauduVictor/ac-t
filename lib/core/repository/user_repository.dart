@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:acm_test/core/api_helper.dart';
 import 'package:acm_test/ui/utils/utils.dart';
 import 'models/models.dart';
@@ -10,8 +10,14 @@ class UserRepository {
   ///
   /// Returns [HostFiLoginModel] on success.
   /// Throws [XException] when operation fails.
-  /// 
-  
+  ///
+
+  UserRepository({
+    http.Client? client,
+  }) : _client = client ?? http.Client();
+
+  final http.Client _client;
+
   String _userLogin() => '${kBaseUrl}log_in';
 
   Future<SignInResponse> loginUser({
@@ -27,7 +33,7 @@ class UserRepository {
 
       // log(
       //   '''
-      //     [APIHelper]: 
+      //     [APIHelper]:
       //       email: $email
       //       password: $password
       //       url: $url
