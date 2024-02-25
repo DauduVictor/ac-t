@@ -22,6 +22,7 @@ dependencies:
   flutter_hooks: any
   freezed_annotation: any
   json_annotation: any
+  http: ^1.2.0
 
 
 dev_dependencies:

@@ -1,0 +1,28 @@
+import 'package:acm_test/core/repository/models/models.dart';
+import 'package:acm_test/core/repository/repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'signin_state.dart';
+part 'signin_cubit.freezed.dart';
+
+class SigninCubit extends Cubit<SigninState> {
+  SigninCubit() : super(const SigninState.initial());
+
+  ///Function to login user
+  Future<void> signInUser({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      emit(const _Loading());
+      final signInResponse = await _userRepository.loginUser(
+        email: email,
+        password: password,
+      );
+      emit(_SignedIn(signInResponse: signInResponse));
+    } on XException catch (e) {
+      emit(_Error(error: e));
+    }
+  }
+}

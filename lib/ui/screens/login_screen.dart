@@ -1,6 +1,8 @@
+import 'package:acm_test/features/auth/cubit/signin_cubit.dart';
 import 'package:acm_test/ui/ui.dart';
 import 'package:acm_test/ui/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,6 +17,7 @@ class LoginScreen extends HookWidget {
     final formKey = useState(GlobalKey<FormState>());
     final emailAddressController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final siginInCubit = context.read<SigninCubit>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -98,12 +101,12 @@ class LoginScreen extends HookWidget {
                     AllProducts.id,
                     (route) => false,
                   );
-                  // if (formKey.value.currentState!.validate()) {
-                  //   // authCubit.loginUser(
-                  //   //   email: _emailAddressController.text.trim(),
-                  //   //   password: _passwordController.text.trim(),
-                  //   // );
-                  // }
+                  if (formKey.value.currentState!.validate()) {
+                    siginInCubit.signInUser(
+                      email: emailAddressController.text.trim(),
+                      password: passwordController.text.trim(),
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 14),
