@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Acumen Test',
-              initialRoute: AllProducts.id,
+              initialRoute: SplashScreen.id,
               theme: AppTheme.themeData,
               routes: {
                 SplashScreen.id: (context) => const SplashScreen(),
