@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/app_bloc_observer.dart';
@@ -7,6 +8,11 @@ import 'ui/ui.dart';
 
 void main() {
   Bloc.observer = AppBlocObserver();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
@@ -18,8 +24,13 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            lazy: false,
             create: (context) => SigninCubit(),
+          ),
+          BlocProvider(
+            create: (context) => GetAllCategoriesCubit(),
+          ),
+          BlocProvider(
+            create: (context) => GetAllProductsCubit(),
           ),
         ],
         child: ScreenUtilInit(
@@ -30,7 +41,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Acumen Test',
-              initialRoute: SplashScreen.id,
+              initialRoute: AllProducts.id,
               theme: AppTheme.themeData,
               routes: {
                 SplashScreen.id: (context) => const SplashScreen(),

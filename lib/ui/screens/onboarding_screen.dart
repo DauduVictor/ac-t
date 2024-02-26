@@ -66,7 +66,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
     Map<int, String> headerText = {
       0: 'Save money & get up to 40% commission on selling products',
-      1: 'Make more money  by growing your business',
+      1: 'Make more money by growing your business',
       2: 'Send commisions & tips directly to your bank account',
     };
 

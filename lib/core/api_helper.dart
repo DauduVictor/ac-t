@@ -33,9 +33,10 @@ class APIHelper {
         if (onSuccessMap != null) {
           final utf8Response = utf8.decode(response.bodyBytes);
           final map = jsonDecode(utf8Response) as Map<String, dynamic>;
-          final data = map.containsKey('data')
-              ? map['data'] as Map<String, dynamic>
-              : map;
+          final data = map.containsKey('data') ? map['data'] : map;
+          if (data is List) {
+            return onSuccessMap({'data': data});
+          }
           return onSuccessMap(data);
         }
       }
