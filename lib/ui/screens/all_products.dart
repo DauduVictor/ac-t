@@ -1,7 +1,5 @@
-import 'package:acm_test/core/repository/models/all_product_response.dart';
-import 'package:acm_test/core/string_extension.dart';
-import 'package:acm_test/features/products/cubits/get_all_categories/get_all_categories_cubit.dart';
-import 'package:acm_test/features/products/cubits/get_all_products/get_all_products_cubit.dart';
+import 'package:acm_test/core/core.dart';
+import 'package:acm_test/features/features.dart';
 import 'package:acm_test/ui/ui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +24,9 @@ class _AllProductsState extends State<AllProducts>
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<GetAllCategoriesCubit>().getAllCategories();
+      context.read<CategoriesCubit>().getAllCategories();
     });
-
     _tabController = TabController(length: 4, vsync: this);
     _tabController!.addListener(() {});
   }
@@ -84,21 +80,20 @@ class _AllProductsState extends State<AllProducts>
           const Divider(color: AppColors.blackColor2),
           const SizedBox(height: 15),
           Expanded(
-            child: BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesState>(
+            child: BlocBuilder<CategoriesCubit, CategoriesState>(
               builder: (context, state) {
-                return state.maybeWhen(
-                  loading: () => const CustomSpinner(),
+                return state.maybeMap(
+                  loading: (value) => const CustomSpinner(),
                   orElse: () => const SizedBox(),
-                  error: (error) => ErrorWidget(
-                    error: error.toString(),
-                    onPressed: () => context
-                        .read<GetAllCategoriesCubit>()
-                        .getAllCategories(),
+                  error: (value) => ErrorWidget(
+                    error: value.error.toString(),
+                    onPressed: () =>
+                        context.read<CategoriesCubit>().getAllCategories(),
                   ),
-                  gottenAllCategories: (gottenAllCategories) {
+                  loaded: (value) {
                     final tabWidget = <Widget>[];
                     final tabViewWidget = <Widget>[];
-                    if (gottenAllCategories.data.isNotEmpty) {
+                    if (value.categories.isNotEmpty) {
                       tabWidget.add(
                         const Tab(
                           child: Text(
@@ -109,7 +104,7 @@ class _AllProductsState extends State<AllProducts>
                       );
                       tabViewWidget.add(const ProductItems());
                     }
-                    for (final category in gottenAllCategories.data) {
+                    for (final category in value.categories) {
                       tabWidget.add(
                         Tab(
                           child: Text(
@@ -120,7 +115,6 @@ class _AllProductsState extends State<AllProducts>
                       );
                       tabViewWidget.add(ProductItems(category: category));
                     }
-
                     return Column(
                       children: [
                         Padding(
@@ -247,9 +241,7 @@ class _ProductItemsState extends State<ProductItems> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context
-          .read<GetAllProductsCubit>()
-          .getAllProduct(category: widget.category);
+      context.read<ProductsCubit>().getAllProduct(category: widget.category);
     });
   }
 
@@ -263,7 +255,7 @@ class _ProductItemsState extends State<ProductItems> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetAllProductsCubit, GetAllProductsState>(
+    return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         return state.maybeWhen(
           loading: () => const AllProductsShimmerList(),
@@ -271,10 +263,10 @@ class _ProductItemsState extends State<ProductItems> {
           error: (error) => ErrorWidget(
             error: error.toString(),
             onPressed: () => context
-                .read<GetAllProductsCubit>()
+                .read<ProductsCubit>()
                 .getAllProduct(category: widget.category),
           ),
-          gottenAllProducts: (gottenAllProducts) {
+          loaded: (products) {
             return Padding(
               padding: const EdgeInsets.only(right: 4),
               child: RawScrollbar(
@@ -286,7 +278,7 @@ class _ProductItemsState extends State<ProductItems> {
                 child: GridView.builder(
                   controller: scrollController,
                   padding: const EdgeInsets.fromLTRB(24, 20, 20, 40),
-                  itemCount: gottenAllProducts.data.length,
+                  itemCount: products.length,
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -295,7 +287,7 @@ class _ProductItemsState extends State<ProductItems> {
                     mainAxisSpacing: 15,
                   ),
                   itemBuilder: (context, index) {
-                    final product = gottenAllProducts.data[index];
+                    final product = products[index];
                     return ProductWidget(product: product);
                   },
                 ),
@@ -314,7 +306,7 @@ class ProductWidget extends StatelessWidget {
     this.product,
   });
 
-  final ProductDetails? product;
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {

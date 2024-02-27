@@ -1,3 +1,2 @@
-export 'assets_path.dart';
-export 'validation-mixin.dart';
+export 'validation_mixin.dart';
 export 'constants.dart';

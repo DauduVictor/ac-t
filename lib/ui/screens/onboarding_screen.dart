@@ -1,5 +1,5 @@
+import 'package:acm_test/gen/assets.gen.dart';
 import 'package:acm_test/ui/ui.dart';
-import 'package:acm_test/ui/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,9 +71,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     };
 
     Map<int, String> image = {
-      0: AssetsPath.onboardingImageOne,
-      1: AssetsPath.onboardingImageTwo,
-      2: AssetsPath.onboardingImageThree,
+      0: AppAssets.images.onboardingImg1.path,
+      1: AppAssets.images.onboardingImg2.path,
+      2: AppAssets.images.onboardingImg3.path,
     };
 
     return Scaffold(
@@ -82,7 +82,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         alignment: Alignment.center,
         children: [
           Image.asset(
-            image[currentPage] ?? AssetsPath.onboardingImageOne,
+            image[currentPage] ?? AppAssets.images.onboardingImg1.path,
             fit: BoxFit.cover,
           ).animate().fadeIn(),
           Container(
@@ -108,13 +108,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    AssetsPath.xImage,
+                  AppAssets.images.xImg.image(
                     fit: BoxFit.contain,
                     scale: 3.5,
                   ),
-                  Image.asset(
-                    AssetsPath.issorsImage,
+                  AppAssets.images.issorsImg.image(
                     fit: BoxFit.contain,
                     scale: 3.5,
                   ),

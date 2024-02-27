@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
             create: (context) => SigninCubit(),
           ),
           BlocProvider(
-            create: (context) => GetAllCategoriesCubit(),
+            create: (context) => CategoriesCubit(),
           ),
           BlocProvider(
-            create: (context) => GetAllProductsCubit(),
+            create: (context) => ProductsCubit(),
           ),
         ],
         child: ScreenUtilInit(

@@ -1,4 +1,4 @@
-import 'package:acm_test/features/auth/cubit/signin_cubit.dart';
+import 'package:acm_test/features/auth/cubits/signin_cubit.dart';
 import 'package:acm_test/ui/ui.dart';
 import 'package:acm_test/ui/utils/utils.dart';
 import 'package:flutter/material.dart';
