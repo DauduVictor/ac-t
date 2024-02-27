@@ -15,9 +15,7 @@ class AllProducts extends StatefulWidget {
   State<AllProducts> createState() => _AllProductsState();
 }
 
-class _AllProductsState extends State<AllProducts>
-    with SingleTickerProviderStateMixin {
-  TabController? _tabController;
+class _AllProductsState extends State<AllProducts> {
 
   final searchController = TextEditingController();
 
@@ -27,8 +25,6 @@ class _AllProductsState extends State<AllProducts>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CategoriesCubit>().getAllCategories();
     });
-    _tabController = TabController(length: 4, vsync: this);
-    _tabController!.addListener(() {});
   }
 
   @override
@@ -115,68 +111,69 @@ class _AllProductsState extends State<AllProducts>
                       );
                       tabViewWidget.add(ProductItems(category: category));
                     }
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: CustomTextFormField(
-                            hintText: 'Search...',
-                            textEditingController: searchController,
-                            keyboardType: TextInputType.text,
-                            prefix: const Icon(
-                              Iconsax.search_normal_14,
-                              color: AppColors.greyColor3,
-                              size: 17,
-                            ),
-                            textInputAction: TextInputAction.search,
-                            bottomSpacing: false,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Column(
-                            children: [
-                              Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  Transform.translate(
-                                    offset: const Offset(0, 1.3),
-                                    child: const Divider(
-                                      color: AppColors.strokeColor,
-                                      height: 5,
-                                      thickness: 0.8,
-                                    ),
-                                  ),
-                                  TabBar(
-                                    controller: _tabController,
-                                    isScrollable: false,
-                                    indicatorColor: AppColors.primaryColor,
-                                    labelStyle: textTheme.bodyMedium!.copyWith(
-                                      color: AppColors.whiteColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    unselectedLabelStyle:
-                                        textTheme.bodyMedium!.copyWith(
-                                      color: AppColors.greyColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    tabs: tabWidget,
-                                  ),
-                                  const SizedBox(height: 4),
-                                ],
+                    return DefaultTabController(
+                      length: tabWidget.length,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: CustomTextFormField(
+                              hintText: 'Search...',
+                              textEditingController: searchController,
+                              keyboardType: TextInputType.text,
+                              prefix: const Icon(
+                                Iconsax.search_normal_14,
+                                color: AppColors.greyColor3,
+                                size: 17,
                               ),
-                            ],
+                              textInputAction: TextInputAction.search,
+                              bottomSpacing: false,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Expanded(
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: tabViewWidget,
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: Column(
+                              children: [
+                                Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    Transform.translate(
+                                      offset: const Offset(0, 1.3),
+                                      child: const Divider(
+                                        color: AppColors.strokeColor,
+                                        height: 5,
+                                        thickness: 0.8,
+                                      ),
+                                    ),
+                                    TabBar(
+                                      isScrollable: false,
+                                      indicatorColor: AppColors.primaryColor,
+                                      labelStyle: textTheme.bodyMedium!.copyWith(
+                                        color: AppColors.whiteColor,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      unselectedLabelStyle:
+                                          textTheme.bodyMedium!.copyWith(
+                                        color: AppColors.greyColor,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      tabs: tabWidget,
+                                    ),
+                                    const SizedBox(height: 4),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 5),
+                          Expanded(
+                            child: TabBarView(
+                              children: tabViewWidget,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 );

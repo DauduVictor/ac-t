@@ -60,7 +60,6 @@ class ProductRepository {
         if (category != null) 'category': category,
       });
       final headers = {'content-type': 'application/json'};
-
       return await APIHelper.request<List<Product>>(
         request: _client.get(
           Uri.parse(url),
@@ -69,7 +68,7 @@ class ProductRepository {
         onSuccessList: (data) => data
             .map((e) => Product.fromJson(e as Map<String, dynamic>))
             .toList(),
-      );
+      ); 
     } on APIException catch (e) {
       throw ProductException(message: e.message);
     }
